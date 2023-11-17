@@ -95,6 +95,10 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   role       = aws_iam_role.worker.name
 }
 
+resource "aws_iam_role_policy_attachment" "AmazonPrometheusQueryAccess" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonPrometheusQueryAccess"
+  role = aws_iam_role.worker.name
+}
 resource "aws_iam_role_policy_attachment" "x-ray" {
   policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"
   role       = aws_iam_role.worker.name
@@ -199,6 +203,7 @@ resource "aws_eks_node_group" "backend" {
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
     aws_iam_role_policy_attachment.worknode-AmazonEBSCSIDriver,
+    aws_iam_role_policy_attachment.AmazonPrometheusQueryAccess
     #aws_subnet.pub_sub1,
     #aws_subnet.pub_sub2,
   ]
